@@ -1,3 +1,10 @@
+About/关于
+===========  
+**EN:** This is a fork in the [paper](https://github.com/PaperMC/Paper), designed to minimize modifications to the upstream code and restore [gravity block replication](https://minecraft.fandom.com/wiki/Tutorials/Block_and_item_duplication#Gravity_Block_Duplication_.28Patched_in_Paper_1.15.2_Build_.23358.29).(After 1.18)   
+
+**ZH:** 这是[paper](https://github.com/PaperMC/Paper)的一个分支，旨在最大限度地减少对上游代码的修改并恢复[重力方块复制](https://minecraft.fandom.com/zh/wiki/%E6%95%99%E7%A8%8B/%E6%96%B9%E5%9D%97%E5%92%8C%E7%89%A9%E5%93%81%E5%A4%8D%E5%88%B6#.E9.87.8D.E5.8A.9B.E6.96.B9.E5.9D.97.E5.A4.8D.E5.88.B6)。(仅限1.18以后的版本)  
+下载方式：
+
 Paper [![Paper Build Status](https://img.shields.io/github/workflow/status/PaperMC/Paper/Build%20Paper/master)](https://github.com/PaperMC/Paper/actions)
 [![Discord](https://img.shields.io/discord/289587909051416579.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/papermc)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/papermc?label=GitHub%20Sponsors)](https://github.com/sponsors/PaperMC)

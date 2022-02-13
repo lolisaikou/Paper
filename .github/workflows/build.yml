@@ -30,4 +30,19 @@ jobs:
                   git config --global user.email "no-reply@github.com"
                   git config --global user.name "Github Actions"
                   ./gradlew applyPatches --stacktrace
-                  ./gradlew build --stacktrace
+                  ./gradlew createReobfBundlerJar --stacktrace
+                  sh ./release.sh
+            - uses: actions/upload-artifact@v2
+              with:
+                  name: Artifacts
+                  path: build/libs
+            - name: get data
+              id: date
+              run: echo "::set-output name=date::$(date -u "+%Y-%m-%d")"
+            - name: release
+              uses: ncipollo/release-action@v1
+              with:
+                artifacts: "./build/libs/*.jar"
+                tag: ${{ steps.date.outputs.date }}
+                body: auto release/自动发布 ${{ github.job }}
+                token: ${{ secrets.GITHUB_TOKEN }}
