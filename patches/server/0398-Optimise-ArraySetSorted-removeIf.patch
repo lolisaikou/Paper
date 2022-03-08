@@ -5,6 +5,41 @@ Subject: [PATCH] Optimise ArraySetSorted#removeIf
 
 Remove iterator allocation and ensure the call is always O(n)
 
+diff --git a/src/main/java/net/minecraft/server/level/DistanceManager.java b/src/main/java/net/minecraft/server/level/DistanceManager.java
+index 6228f2f67541da62b0ae093de987662db9643740..8376439e36f0f75779d0fbefbe50b215a40c42aa 100644
+--- a/src/main/java/net/minecraft/server/level/DistanceManager.java
++++ b/src/main/java/net/minecraft/server/level/DistanceManager.java
+@@ -86,13 +86,27 @@ public abstract class DistanceManager {
+     protected void purgeStaleTickets() {
+         ++this.ticketTickCounter;
+         ObjectIterator objectiterator = this.tickets.long2ObjectEntrySet().fastIterator();
++        // Paper start - use optimised removeIf
++        long[] currChunk = new long[1];
++        long ticketCounter = DistanceManager.this.ticketTickCounter;
++        java.util.function.Predicate<Ticket<?>> removeIf = (ticket) -> {
++            final boolean ret = ticket.timedOut(ticketCounter);
++            if (ret) {
++                this.tickingTicketsTracker.removeTicket(currChunk[0], ticket);
++            }
++            return ret;
++        };
++        // Paper end - use optimised removeIf
+ 
+         while (objectiterator.hasNext()) {
+             Entry<SortedArraySet<Ticket<?>>> entry = (Entry) objectiterator.next();
+-            Iterator<Ticket<?>> iterator = ((SortedArraySet) entry.getValue()).iterator();
+-            boolean flag = false;
++            // Paper start - use optimised removeIf
++            Iterator<Ticket<?>> iterator = null;
++            currChunk[0] = entry.getLongKey();
++            boolean flag = entry.getValue().removeIf(removeIf);
+ 
+-            while (iterator.hasNext()) {
++            while (false && iterator.hasNext()) {
++                // Paper end - use optimised removeIf
+                 Ticket<?> ticket = (Ticket) iterator.next();
+ 
+                 if (ticket.timedOut(this.ticketTickCounter)) {
 diff --git a/src/main/java/net/minecraft/util/SortedArraySet.java b/src/main/java/net/minecraft/util/SortedArraySet.java
 index d1b2ba24ef54e01c6249c3b2ca16e80f03c001a6..5f1c4c6b9e36f2d6ec43b82cc0e2cae24b800dc4 100644
 --- a/src/main/java/net/minecraft/util/SortedArraySet.java
