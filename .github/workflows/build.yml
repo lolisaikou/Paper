@@ -44,5 +44,5 @@ jobs:
               with:
                 artifacts: "./build/libs/*.jar"
                 tag: ${{ steps.date.outputs.date }}
-                body: auto release/自动发布 ${{ github.job }}
+                body: auto release/自动发布
                 token: ${{ secrets.GITHUB_TOKEN }}

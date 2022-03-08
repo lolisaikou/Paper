@@ -957,7 +957,7 @@ index 614ce90b4a1a6e6385d1bfc4d1df0563ecc33b98..78478f6e8bd07c2b4e11b627819a664e
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -428,6 +428,56 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource, i
-     }
+     //}
      // Paper end - make end portalling safe
  
 +    // Paper start
